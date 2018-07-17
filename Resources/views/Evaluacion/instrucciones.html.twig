@@ -1,0 +1,83 @@
+{% extends 'ItsurAeiBundle::aspirantelayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+ <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+       <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+           
+           <table align="center">
+               <td><p align="left" class="confirmaText"> Ficha:</p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.ficha}}</p></td>
+               <td><p align="left" class="confirmaText">Nombre: </p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.nombre}}</p></td>
+            </table> 
+
+       </header>
+<center>
+<table align="center" width="600">
+<tr>
+    <td>
+    <p align="center" class="advertencia">Instrucciones Generales.</p>
+    </td>
+</tr>
+<tr>
+    <td>
+     <p class="instrucciones" align="justify"> El examen se compone de 140 preguntas divididas en siete áreas de estudio, distribuidas de la siguiente manera:</p>
+      <table>
+        <td>
+        <ul>
+
+           <li class="opciones" type="square">Matemáticas.</li>
+           <li class="opciones" type="square">Comprensión de Lectura.</li>
+           <li class="opciones" type="square">Ortográfia y signos de puntuación.</li>
+           <li class="opciones" type="square">Metodología de la investigación.</li>
+           <li class="opciones" type="square">Física.</li>
+           <li class="opciones" type="square">Química.</li>
+           <li class="opciones" type="square">Biología.</li>
+           <li class="opciones" type="square">Programación.</li>
+           <li class="opciones" type="square">Matematicas discretas.</li>
+           <li class="opciones" type="square">Redes de Computaras.</li>
+           <li class="opciones" type="square">Probabilidad.</li>
+           <li class="opciones" type="square">Estádistica.</li>
+           <li class="opciones" type="square">Administración.</li>
+           <li class="opciones" type="square">Contabilidad.</li>
+
+        </ul>
+        </td>
+      </table>
+    </td>
+    </tr>
+    <tr>
+       <td>
+            <p class="instrucciones" align="justify">Las preguntas se muestran agrupadas por área y tema según correspondan.
+            Cada área contiene grupos de preguntas que corresponden a los temas de la misma, presentándose por bloques de tema.</p>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <p class="instrucciones" align="justify">El nombre de las áreas del examen aparece en la parte superior de la pantalla, resaltando la que se evalúa.</p>
+           <p class="instrucciones" align="justify">Todas las preguntas presentan cuatro posibles respuestas, y sólo una es la opción válida.</p>
+           <p class="instrucciones" align="justify">Una vez que se ha contestado el grupo de preguntas, se presiona el botón continuar, permitiendo avanzar al siguiente grupo, sin la posibilidad de volver al mismo.</p>
+           <p class="instrucciones" align="justify">Lee cuidadosamente la pregunta y selecciona la respuesta correcta. En caso de no seleccionar ninguna respuesta, ésta se considera errónea.</p>
+           <p class="instrucciones" align="justify">El aplicador del examen indicará la hora de inicio y término, el cual deberá ser respetado.</p>
+        </td>
+    </tr>
+</tr>
+</table>
+<br/>
+<br/>
+<a href="{{ path('evaluacion_grupo',{ 'ficha':aspirante.ficha, 'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}" class="button">
+        Comenzar evaluación
+</a>
+</center>
+<br/>
+{% endblock %}

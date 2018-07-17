@@ -1,0 +1,108 @@
+{% extends 'ItsurAeiBundle::estalayout.html.twig' %}
+
+{% block title %}
+    Estadisticos
+{% endblock %}
+
+{% block javascripts %}
+         {{ parent() }}
+		
+     <script type="text/javascript">
+ $(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: 'Promedio aspirantes {{ periodo.semestre}} {{ periodo.anio}}   ',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Total aspirantes: {{total}}',
+                x: -20
+            },
+            xAxis: {
+                categories: [
+                 {% for dato in datos %}
+                    '{{ dato.promedioBachillerato }}',
+                    {% endfor %}
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                },
+                plotLines: [{
+				    
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+			plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +' aspirantes';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+               name: 'Promedio',
+			   data: [
+                {% for dato in datos %}
+                    {{ dato.cantidad }},
+                {% endfor %}
+                
+               ]
+            }]
+        });
+    });
+    
+});
+    </script>
+			
+   
+{% endblock%}
+
+{% block body %}
+     
+   <div id="container" style="min-width: 400px; height: 600px; margin: 0 auto"></div>
+    <br/>
+    {{ periodo.anio}}  {{ periodo.semestre}} 
+    <br/>
+    <br/>
+    <table border="1">
+    <tr>
+        <th>Promedio Bachillerato</th>
+        <th>Cantidad</th>
+    </tr>
+
+       {% for dato in datos %}
+            <tr>
+           {% for datox in dato %}
+             <td>{{datox}}</td>
+           {% endfor %}
+           </tr>
+       {% endfor %}
+    <br/>
+    Total aspirantes: {{total}}
+{% endblock %}

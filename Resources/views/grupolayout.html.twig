@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+             {% stylesheets '@ItsurAeiBundle/Resources/public/css/grupo.css'%}
+                   <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+             {% endstylesheets%}
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />       
+    </head>
+    <body>
+      <header>
+        
+          <div>
+            <span class="inicio" title="Inicio">&nbsp;</span>
+               {% for area in hoja.areas %}{% if area.contestada %}
+                   <span class="activo" title="{{ area.area.nombre }}" >&nbsp;</span>
+                  {% else %}
+                   <span class="desactivado" title="{{ area.area.nombre }}">&nbsp;</span>
+                  {% endif %}
+              {% endfor %}  
+          <span class="fin" title="Fin">&nbsp;</span>
+          <p class="eva">Progreso de la evaluación</p>
+        </div>
+      </header>
+      
+         {% block body %}{% endblock %}
+         {% block javascripts %}{% endblock %}
+    </body>
+</html>

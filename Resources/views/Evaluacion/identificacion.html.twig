@@ -1,0 +1,54 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluaci&oacute;n
+{% endblock %}
+{% block body %}
+    <header>
+       <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="desactivado">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+        <center>
+            <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>           
+         </center>   
+    </header>
+    <div id="content">
+             </br>
+            <p align="center" class="advertencia">Identificación</p>
+            <p class="instrucciones">En el siguiente cuadro escribe el numero de tu ficha, y el nombre del aplicador, para continuar con el proceso. </p>
+             
+                  
+                       <form action="{{ path('evaluacion_identificacion') }}" method="post" class="instrucciones" >
+                             {{ form_enctype(form) }}
+
+                            <table align="center">
+                            <tr>
+                                <td align="right"> {{ form_label(form.ficha) }} : </td>
+                                 <td align="left">{{ form_widget(form.ficha) }}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right"> {{ form_label(form.aplicador) }} : </td>
+                            
+                                <td align="left">{{ form_widget(form.aplicador) }}</td>
+                            </tr>
+                            </table>
+                    
+                             </br>
+                            <input id="submit"  type="submit" value="Siguiente" class="button"  />
+           
+          
+           
+             
+            </form>
+            </br>
+            </br>
+             <p>Si no recuerdas tu número de ficha, da click <a href="{{ path('evaluacion_buscar') }} ">aquí</a> para buscar.</p>
+             <p>En caso de que no te encuentre registrado, da click <a href="{{ path('evaluacion_nuevo') }}" >aquí</a> para darte de alta.</p>
+     </div>       
+           
+        
+     
+{% endblock %}

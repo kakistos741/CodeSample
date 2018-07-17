@@ -1,0 +1,153 @@
+{% extends 'ItsurAeiBundle::estalayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block javascripts %}
+         {{ parent() }}
+		 
+		    <script type="text/javascript">
+ $(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: 'Promedio aspirantes {{ periodo.semestre}} {{ periodo.anio}}   ',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Total aspirantes: ',
+                x: -20
+            },
+            xAxis: {
+                categories: [
+                 {% for aspirante in aspirantes %}
+                    '{{aspirante.ficha}}',
+                    {% endfor %}
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                },
+                plotLines: [{
+				    
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+			plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +' aspirantes';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+               name: 'Calificacion',
+			   data: [
+                {% for aspirante in aspirantes %}
+                    {{aspirante.hoja.calificacion}},
+                {% endfor %}
+                ]
+            },{
+               name: 'Seleccion',
+			   data: [
+                {% for aspirante in aspirantes %}
+                    {{aspirante.hoja.calificacionseleccion}},
+                {% endfor %}
+                ]
+            },{
+               name: 'Calificacion diagnostico',
+			   data: [
+                {% for aspirante in aspirantes %}
+                    {{aspirante.hoja.calificaciondiagnostico}},
+                {% endfor %}
+                ]}]
+        });
+    });
+    
+});
+    </script>
+			
+   
+{% endblock%}
+
+{% block body %}
+<div id="container" style="min-width: 400px; height: 600px; margin: 0 auto"></div>
+    <p class="titulosNegro" align="center">Reporte de Calificaciones</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+     <br/>
+     <br/>
+     <table align="center" border=1>
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Nombre</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Fecha aplicación</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Calificación</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro">Selección </p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro"> Diagnóstico </p>
+         </th>
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.ficha}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.nombre}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.fecha.format('d-m-Y')}}</p>
+                </td>
+                 <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificacion}} </p>
+                </td>
+                 <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificacionseleccion}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificaciondiagnostico}} </p>
+                </td>
+
+    {% else %}
+        <tr>
+            <p align="center" class="advertencia">¡No se encontrarón aspirantes!.</p>
+        </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Bienvenido
+{% endblock %}
+
+{% block body %}
+    
+           <nav id="p_nav">
+		      <a href="{{ path('admin_index') }}" >Administraci&oacute;n&nbsp;&nbsp;</a>
+		   </nav>
+		   <div id="p_content">
+			   <header id="p_header">
+					SISTEMA DE EVALUACI&Oacute;N DE NUEVO INGRESO ITSUR
+			   </header>
+		       <a href="{{ path('evaluacion_index') }}" class="button" >
+                    Evaluación de ingreso
+               </a>
+		   </div>
+		   
+		   <footer id="p_footer">
+		   <p align="center">Se recomienda utilizar, Internet Explorer 10+, Firefox 10+ o Chrome 20+<p>
+		   </footer>
+		   	   
+            
+{% endblock %}

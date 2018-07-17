@@ -1,0 +1,45 @@
+{% extends 'ItsurAeiBundle::aspirantelayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+      <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="activo">Fin</li>
+        </ul>
+       <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+           
+           <table align="center">
+               <td><p align="left" class="confirmaText"> Ficha:</p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.ficha}}</p></td>
+               <td><p align="left" class="confirmaText">Nombre: </p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.nombre}}</p></td>
+            </table> 
+
+       </header>
+           <p class="advertencia" align="center">¡Has Finalizado!</p>
+           <br/>
+           <p class="instrucciones" align="center"> Terminaste tu primera etapa del proceso de admisión para ser parte del ITSUR </p>
+           <p class="instrucciones" align="center"> La siguiente etapa consiste en:</p>
+           <table align="center" width="400">
+              <td align="justify">
+                 <ul>
+                    <li class="instrucciones" type="square">Evaluación psicométrica y entrevista final, para lo cual debes acércate con el aplicador para verificar la fecha y hora.</li>
+                    <li class="instrucciones" type="square">Los resultados se proporcionarán el día de tu entrevista.</li>
+                 </ul>
+              </td>
+           </table>
+           <center>
+           <br/>
+           <a href="{{ path('evaluacion_finalizar') }}" class="button">
+              Terminar
+           </a>
+           </td>
+           </tr>
+  </center>
+{% endblock %}

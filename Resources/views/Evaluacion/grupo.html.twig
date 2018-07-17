@@ -1,0 +1,111 @@
+{% extends 'ItsurAeiBundle::grupolayout.html.twig' %}
+{% form_theme form _self %}
+
+{% block generic_label %}
+{% spaceless %}
+    {% if required %}
+        {% set attr = attr|merge({'class': attr.class|default('') ~ ' required'}) %}
+    {% endif %}
+    {# <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>{{ label|trans }}</label> #}
+    <p class="preguntas"> {{ label|raw }} </p>
+{% endspaceless %}
+{% endblock %}
+
+{% block field_row %}
+{% spaceless %}
+    <div>
+        <table align="center" class="respuesta" >
+            <tr >
+                <td colspan="7" align="left" >
+
+                  {{ form_label(form, label|default(null)) }} 
+                   
+                    {% render "ItsurAeiBundle:Evaluacion:desplegarImagen" with {'pregunta': name} %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+     <br/>
+    <hr width="85%" align="center">
+   
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block choice_widget %}
+{% spaceless %}
+    {% if expanded %}
+        <div  {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <td aling="left">
+                 {{ form_widget(child) }}
+                 {# Fragmento cambiado para agregar la funcionalidad de mostrar imagenes #}
+                 {# { form_label(child) } #}
+                 {% render "ItsurAeiBundle:Evaluacion:desplegarImagenRespuesta" with {'pregunta': name , 'respuesta' : child.get('label') | trans}  %}
+            </td>
+           
+        {% endfor %}
+        </div>
+    {% else %}
+    <select  {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+            <option value="" class=>{{ empty_value|trans }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('widget_choice_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled" class=>{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('widget_choice_options') }}
+    </select>
+    {% endif %}
+
+{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+  <center>
+    <p class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p >Ficha: <span class="otros">{{ aspirante.ficha }}</span> &nbsp;&nbsp;Nombre: <span class="otros">{{ aspirante.nombre }} </span></p>
+    <p class="otros"> {{ grupoPreguntas.grupo.tema.seccion.area.nombre }}/{{ grupoPreguntas.grupo.tema.seccion.nombre }}/{{ grupoPreguntas.grupo.tema.nombre }}</p>
+    <p align="center" class="otros">Preguntas de {{ grupoPreguntas.grupo.tema.nombre }} : 
+      <span align="center" class="advertencia">{{ grupoPreguntas.grupo.numeroPreguntas }} </span> </p>
+        
+</center>
+
+
+        {% if grupoPreguntas.grupo.caso %}
+            <br/>
+            <br/>
+          <center>             
+            <img src="{{ asset('bundles/itsuraei/images') }}{{ grupoPreguntas.grupo.caso }}" />
+          </center> 
+        {% endif %}
+      
+
+        <br/>
+        <form action="{{ path('evaluacion_guardarGrupo',{ 'ficha':aspirante.ficha,
+                   'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}"
+                    method="post" {{ form_enctype(form) }}>
+                 {{ form_widget(form) }}
+        
+                <center>
+                   <input type="submit" value="Siguiente" class="button" align="center"/>
+                </center>
+    </form>
+   <br/>
+
+{% endblock %}
